@@ -1,0 +1,26 @@
+def get_mask_card_number(card_number):
+    """Функция, которая маскирует номер банковской карты"""
+    if not card_number.isdigit():
+        return "Ошибка: номер карты должен состоять только из цифры"
+
+    # Проверяем длину номера
+    if len(card_number) != 16:
+        return "Ошибка: номер карты должен содержать 16 цифр"
+
+    blocks = [card_number[i : i + 4] for i in range(0, 16, 4)]
+
+    masked_blocks = [blocks[0], blocks[1][:2] + "**", "****", blocks[3]]
+    return " ".join(masked_blocks)
+
+
+def get_mask_account(account_number):
+    """Функция, которая маскирует номер счета"""
+    if not account_number.isdigit():
+        return "Ошибка: номер карты должен состоять только из цифры"
+
+    if len(account_number) < 4:
+        return "Ошибка: номер счета должен содержать минимум 4 цифры"
+
+    masked_number = "**{}".format(account_number[-4:])
+
+    return masked_number
