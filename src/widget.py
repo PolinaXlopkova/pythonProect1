@@ -1,9 +1,27 @@
-def mask_card_number(number: str) -> str:
-    '''Маскирует все цифры карты, кроме последних 4'''
-    return '*' * (len(number) - 4) + number[-4:]
+from masks import get_mask_account, get_mask_card_number
 
-def mask_account_number(number: str) -> str:
-    '''Маскирует первые 6 и последние 4 цифры счета, показывая середину'''
-    return number[:6] + '*' * (len(number) - 10) + number[-4:]
+def mask_account_card(input_str: str) -> str:
+    """Функция, обрабатывает информацтию о картах и счетах"""
+    parts = input_str.split()
+    name = " ".join(parts[:-1])
+    number = parts[-1]
 
-def mask_account_card(info: str) -> str:
+    if len(number) == 16:  # карта
+        masked_number = get_mask_card_number(number)
+    else:  # счет
+        masked_number = get_mask_account(number)
+
+    return f"{name} {masked_number}"
+
+def get_date(date_string: str) -> str:
+    """Функция, принимает данные и возвращает в виде день.месяц.год""" 
+    try:
+
+        date_part = date_string.split("T")[0]
+
+        year, month, day = date_part.split("-")
+
+        return f"{day}.{month}.{year}"
+
+    except (IndexError, ValueError):
+        return "Ошибка: неверный формат даты"
