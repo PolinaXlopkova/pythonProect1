@@ -1,4 +1,5 @@
 def get_mask_card_number(card_number):
+    card_number = card_number.replace(" ", "")
     """Функция, которая маскирует номер банковской карты"""
     if not card_number.isdigit():
         return "Ошибка: номер карты должен состоять только из цифры"
@@ -9,8 +10,8 @@ def get_mask_card_number(card_number):
 
     blocks = [card_number[i : i + 4] for i in range(0, 16, 4)]
 
-    masked_blocks = [blocks[0], blocks[1][:2] + "**", "****", blocks[3]]
-    return " ".join(masked_blocks)
+    masked_card_number = "**** **** **** " + card_number[-4:]
+    return masked_card_number
 
 
 def get_mask_account(account_number):
