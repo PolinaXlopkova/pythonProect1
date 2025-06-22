@@ -12,6 +12,7 @@ def mask_account_card(account):
             return '*' * (len(account) - 4) + account[-4:]  # Маскируем номера счетов
     raise ValueError("Invalid account or card number")
 
+
 @pytest.mark.parametrize("input_account, expected_output", [
     ("12345677812345678", "*************5678"), #Кредитная
     ("4111111111111111", "************1111"),  # Visa
