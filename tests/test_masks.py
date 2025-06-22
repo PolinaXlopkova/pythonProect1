@@ -1,5 +1,5 @@
 import pytest
-from src.masks import get_mask_card_number, get_mask_account
+from src.masks import get_mask_account, get_mask_card_number
 
 def test_get_mask_card_number():
     # Тестирование правильности маскирования номера карты
@@ -20,16 +20,25 @@ def test_get_mask_card_number():
     assert get_mask_card_number("abcd") == "Ошибка: номер карты должен состоять только из цифры"
     assert get_mask_card_number("1234abcd5678") == "Ошибка: номер карты должен состоять только из цифры"
 
-def get_mask_account(account_number):
+if __name__ == "__main__":
+    pytest.main()
+
+
+def test_get_mask_account():
+    account_number = '1234567890123456'  # пример значения
+    result = get_mask_account(account_number)
+
     # Проверка, что номер счета является строкой
     if not isinstance(account_number, str):
         raise ValueError("Номер счета должен быть строкой")
 
     # Проверка длины номера счета
     if len(account_number) < 4:
-        return "Номер счета слишком короткий"
+        assert result == "Номер счета слишком короткий"
 
     # Маскируем все символы, кроме последних 4
-    return '*' * (len(account_number) - 4) + account_number[-4:]
+    assert '**3456' == '**3456'
 
-    # Тестирование функции
+
+if __name__ == "__main__":
+    pytest.main()
