@@ -1,4 +1,4 @@
-from masks import get_mask_account, get_mask_card_number
+
 
 def mask_account_card(input_str: str) -> str:
     """Функция, обрабатывает информацтию о картах и счетах"""
@@ -13,8 +13,9 @@ def mask_account_card(input_str: str) -> str:
 
     return f"{name} {masked_number}"
 
+
 def get_date(date_string: str) -> str:
-    """Функция, принимает данные и возвращает в виде день.месяц.год""" 
+    """Функция, принимает данные и возвращает в виде день.месяц.год"""
     try:
 
         date_part = date_string.split("T")[0]
