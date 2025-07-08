@@ -1,39 +1,38 @@
-import logging
 import pytest
+
 from src.decorators import log
 
-@pytest.fixture
-def setup_logging():
-    # Сброс настроек логгера перед каждым тестом
-    logging.getLogger().handlers = []
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        handlers=[logging.StreamHandler()]
-    )
-    logging.getLogger('root').propagate = False  # Предотвращает дублирование логов
 
-def test_log_success(capsys, setup_logging):
+def test_log_success(capsys):
     @log()
-    def test_func(x, y):
-        return x + y
+    def test_func():
+        return "success"
 
-    result = test_func(10, 20)
-    assert result == 30
+    test_func()
+    captured = capsys.readouterr()
+    assert captured.out == "test_func ok\n"
 
-    # Добавляем задержку для асинхронных логов
-    import time; time.sleep(0.1)
 
-def test_log_error(capsys, setup_logging):
+def test_log_error(capsys):
     @log()
-    def failing_func():
-        raise ValueError("Something went wrong")
+    def test_func():
+        raise ValueError("Test error")
 
     with pytest.raises(ValueError):
-        failing_func()
-
-    # Добавляем задержку для асинхронных логов
-    import time; time.sleep(0.1)
+        test_func()
 
     captured = capsys.readouterr()
-    assert 'raised ValueError' in captured.err
+    assert "test_func error: ValueError. Inputs: (), {}" in captured.out
+
+
+def test_log_file(tmp_path, capsys):
+    log_file = tmp_path / "test.log"
+
+    @log(filename=str(log_file))
+    def test_func():
+        return "success"
+
+    test_func()
+    with open(log_file) as f:
+        content = f.read()
+    assert content == "test_func ok\n"
