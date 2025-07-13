@@ -1,10 +1,13 @@
 import requests
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
 def get_exchange_rate(currency):
     url = f"https://api.apilayer.com/exchangerates_data/latest?base={currency}&symbols=RUB"
     headers = {
-        "apikey": "SQylfl7Woewls1Xr9m97terjkrhFc1h6"
+        "apikey": os.getenv('API_KEY')
     }
     response = requests.get(url, headers=headers)
     data = response.json()
@@ -22,3 +25,11 @@ def convert_to_rub(transaction):
         return float(amount) * rate
     else:
         raise ValueError("Unsupported currency")
+
+print("Загрузка .env файла")
+load_dotenv()
+api_key = os.getenv('API_KEY')
+if api_key is None:
+    print("API_KEY не найдена")
+else:
+    print("API_KEY загружена успешно", api_key)
