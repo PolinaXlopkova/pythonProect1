@@ -15,3 +15,9 @@ def load_transactions(file_path):
                 return []
         except json.JSONDecodeError:
             return []
+
+
+from logger import utils_logger
+
+def another_function():
+    utils_logger.error("Это сообщение об ошибке из utils.")

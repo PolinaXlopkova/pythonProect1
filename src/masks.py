@@ -25,3 +25,8 @@ def get_mask_account(account_number):
     masked_number = "**{}".format(account_number[-4:])
 
     return masked_number
+
+from logger import masks_logger
+
+def some_function():
+    masks_logger.info("Это информационное сообщение из masks.")
