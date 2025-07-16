@@ -1,5 +1,6 @@
 
 
+
 def mask_account_card(input_str: str) -> str:
     """Функция, обрабатывает информацтию о картах и счетах"""
     parts = input_str.split()
