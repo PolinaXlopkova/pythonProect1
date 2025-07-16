@@ -37,15 +37,11 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
-htmlcov/
 .tox/
 .nox/
-.coverage
-.coverage.*
 .cache
 nosetests.xml
 coverage.xml
-*.cover
 *.py,cover
 .hypothesis/
 .pytest_cache/
@@ -193,3 +189,9 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+htmlcov/
+
+.coverage.*
+
+coverage.xml
