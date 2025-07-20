@@ -1,3 +1,4 @@
+from src.masks import get_mask_card_number
 
 
 def mask_account_card(input_str: str) -> str:
@@ -9,7 +10,7 @@ def mask_account_card(input_str: str) -> str:
     if len(number) == 16:  # карта
         masked_number = get_mask_card_number(number)
     else:  # счет
-        masked_number = get_mask_account(number)
+        masked_number = mask_account_card(number)
 
     return f"{name} {masked_number}"
 
