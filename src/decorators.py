@@ -9,10 +9,10 @@ def log(filename=None):
         def wrapper(*args, **kwargs):
             try:
                 result = func(*args, **kwargs)
-                log_message = f"{func.name} ok"
+                log_message = f"{func.__name__} ok"
             except Exception as e:
-                error_type = type(e).name
-                log_message = f"{func.name} error: {error_type}. Inputs: {args}, {kwargs}"
+                error_type = type(e).__name__
+                log_message = f"{func.__name__} error: {error_type}. Inputs: {args}, {kwargs}"
                 raised_exception = e
             else:
                 raised_exception = None
