@@ -1,22 +1,26 @@
 import re
+from collections import Counter
 
 
-def process_bank_search(data: list[dict], search: str) -> list[dict]:
-    # Компилируем регулярное выражение для поиска
-    pattern = re.compile(re.escape(search), re.IGNORECASE)
+def process_bank_operations(transactions, search_string):
+    # Создаем регулярное выражение для поиска
+    pattern = re.compile(re.escape(search_string), re.IGNORECASE)
 
-    # Фильтруем список словарей по описанию
-    result = [entry for entry in data if 'description' in entry and pattern.search(entry['description'])]
+    # Фильтруем список словарей операций
+    result = [transaction for transaction in transactions if pattern.search(transaction.get('description', ''))]
 
     return result
 
 
-def process_bank_operations(data: list[dict], categories: list) -> dict:
-    category_counts = {category: 0 for category in categories}
+def process_bank_search(transactions, category_dict):
+    # Подсчет транзакций по описанию
+    transaction_counts = Counter()
 
-    for operation in data:
-        description = operation.get('description')
-        if description in category_counts:
-            category_counts[description] += 1
+    for transaction in transactions:
+        # Предполагаем, что каждая транзакция имеет поле 'category'
+        category = transaction.get('category')
+        if category in category_dict:
+            transaction_counts[category] += 1
 
-    return category_counts
+    # Преобразуем счетчик в словарь
+    return dict(transaction_counts)

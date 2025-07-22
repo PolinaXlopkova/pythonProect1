@@ -106,6 +106,38 @@ print(get_date("2025-06-14T12:00:00"))  # Вывод: 14.06.2025
 Функция для считывания финансовых операций из Excel принимает путь к файлу Excel в качестве аргумента.
 Функция для считывания финансовых операций из Excel выдает список словарей с транзакциями.
 ```
+11. Функция считывания финансовых операций из Excel
+```
+transactions = read_excel_transactions(excel_path)
+print("Список транзакций:")
+@@ -196,6 +196,30 @@ print("Список транзакций:")
+ print(f"Описание: {transaction['description']}")
+ print("-" * 40)
+```
+12. def process_bank_search.
+```
+transactions = [
+ {"description": "Перевод с карты на карту"},
+ {"description": "Оплата услуг ЖКХ"},
+ {"description": "Пополнение счета"},
+ {"description": "Снятие наличных"}
+]
+result = process_bank_search(transactions, "карта")
+result = process_bank_search(transactions, "КАРТА")
+result = process_bank_search(transactions, "услуг")
+```
+13. def process_bank_operations.
+```
+transactions = 
+ {"description": "Перевод с карты на карту"},
+ {"description": "Оплата услуг ЖКХ"},
+ {"description": "Пополнение счета"},
+ {"description": "Снятие наличных"}
+categories = ["перевод", "оплата", "пополнение"]
+result = process_bank_operations(transactions, categories)
+categories_upper = ["ОПЛАТА", "ПЕРЕВОД"]
+result_upper = process_bank_operations(transactions, categories_upper)
+```
 ###
 <h1>
 Пример использования тестов:
