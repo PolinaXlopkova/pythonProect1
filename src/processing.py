@@ -20,7 +20,7 @@ def sort_by_date(operations: list, ascending: bool = False) -> list:
         try:
             date_string: str = operation["date"]
             # Преобразуем строку в объект datetime для корректной сортировки
-            return datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S.%f")
+            return datetime.strptime(date_string, "%Y-%m-%d")
         except (KeyError, ValueError):
             raise ValueError("Некорректный формат даты или отсутствие ключа 'date'")
 
