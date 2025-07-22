@@ -12,7 +12,6 @@ def filter_by_state(data: List[Dict], state: str = "EXECUTED") -> List[Dict]:
 
     return filtered_data
 
-
 def sort_by_date(operations: list, ascending: bool = False) -> list:
     """Сортирует список операций по дате."""
 
