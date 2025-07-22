@@ -1,3 +1,6 @@
+from logger import masks_logger
+
+
 def get_mask_card_number(card_number):
     card_number = card_number.replace(" ", "")
     """Функция, которая маскирует номер банковской карты"""
@@ -7,8 +10,6 @@ def get_mask_card_number(card_number):
     # Проверяем длину номера
     if len(card_number) != 16:
         return "Ошибка: номер карты должен содержать 16 цифр"
-
-    blocks = [card_number[i : i + 4] for i in range(0, 16, 4)]
 
     masked_card_number = "**** **** **** " + card_number[-4:]
     return masked_card_number
@@ -26,7 +27,6 @@ def get_mask_account(account_number):
 
     return masked_number
 
-from logger import masks_logger
 
 def some_function():
     masks_logger.info("Это информационное сообщение из masks.")
