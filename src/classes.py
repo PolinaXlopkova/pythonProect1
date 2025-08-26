@@ -14,7 +14,15 @@ class Product:
         if new_price > 0:
             self.__price = new_price
         else:
-            print ("Цена не должна быть нулевая или отрицательная")
+            print("Цена не должна быть нулевая или отрицательная")
+
+    def __str__(self):
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other):
+        if isinstance(other, Product):
+            return (self.price * self.quantity) + (other.price * other.quantity)
+        return NotImplemented
 
 
 class Category:
@@ -47,3 +55,7 @@ class Category:
             description=product_data['description'],
             quantity=product_data['quantity']
         )
+
+    def __str__(self):
+        total_quantity = sum(product.quantity for product in self.__products)
+        return f"{self.name}, количество продуктов: {total_quantity} шт."
