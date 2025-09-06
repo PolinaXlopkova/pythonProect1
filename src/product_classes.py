@@ -7,6 +7,7 @@ class Product:
             raise TypeError(f"Cannot add {type(self).__name__} and {type(other).__name__}")
         return f"Combined {self.name} and {other.name}"
 
+
 class Smartphone(Product):
     def __init__(self, name, efficiency, model, memory, color):
         super().__init__(name)
@@ -19,6 +20,7 @@ class Smartphone(Product):
         return (f"Smartphone(name={self.name}, efficiency={self.efficiency}, "
                 f"model={self.model}, memory={self.memory}, color={self.color})")
 
+
 class LawnGrass(Product):
     def __init__(self, name, country, germination_period, color):
         super().__init__(name)
@@ -29,4 +31,3 @@ class LawnGrass(Product):
     def __repr__(self):
         return (f"LawnGrass(name={self.name}, country={self.country}, "
                 f"germination_period={self.germination_period}, color={self.color})")
-

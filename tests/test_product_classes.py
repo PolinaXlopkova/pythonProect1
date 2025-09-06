@@ -1,6 +1,7 @@
 import unittest
 from src.product_classes import Smartphone, LawnGrass
 
+
 class TestProductClasses(unittest.TestCase):
 
     def setUp(self):
@@ -38,6 +39,7 @@ class TestProductClasses(unittest.TestCase):
         """Тестирование сложения объектов разных типов (должно вызывать ошибку)."""
         with self.assertRaises(TypeError):
             _ = self.smartphone1 + self.lawn_grass
+
 
 if __name__ == '__main__':
     unittest.main()
