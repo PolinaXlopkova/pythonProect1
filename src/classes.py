@@ -64,106 +64,46 @@ class Category:
         return f"{self.name}, количество продуктов: {total_quantity} шт."
 
 
-class LogCreationMixin:
-    """Миксин для логирования создания объектов."""
-
-    def init(self, *args, **kwargs):
-        super().init(*args, **kwargs)
-        self._log_creation()
-
-    def _log_creation(self):
-        """Логирует информацию о создании объекта."""
-        class_name = self.__class__.name
-
-        print(f"[LOG] Создан объект класса: {class_name}")
-
-
-class BaseProduct(LogCreationMixin, ABC):
-    """Абстрактный базовый класс для всех продуктов."""
-
-    def init(self, name: str, description: str, price: float, quantity: int, **kwargs):
-        # LogCreationMixin.init вызовется первым и напечатает логи
-        super().init(name=name, description=description, price=price, quantity=quantity, **kwargs)
-
-        self.name = name
-        self.description = description
-        self.__price = price
-        self.quantity = quantity
+# Абстрактный класс BaseProduct
+class BaseProduct(ABC):
 
     @abstractmethod
-    def get_additional_info(self) -> str:
+    def get_info(self):
         pass
 
-    def str(self) -> str:
-        return (f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт.\n"
-                f"Описание: {self.description}\n"
-                f"{self.get_additional_info()}")
+# Класс Product, наследующийся от BaseProduct
+class Product(BaseProduct):
 
-    @property
-    def price(self) -> float:
-        return self.__price
-
-    @price.setter
-    def price(self, new_price: float):
-        if new_price <= 0:
-            print("Ошибка: Цена должна быть положительным числом.")
-        elif new_price < self.__price:
-            user_input = input(f"Новая цена ниже текущей. Подтвердите (y/n): ").strip().lower()
-            if user_input == 'y':
-                self.__price = new_price
-        else:
-            self.__price = new_price
-
-
-# Классы-наследники остаются без изменений
-class Smartphone(BaseProduct):
-    def init(self, name: str, description: str, price: float, quantity: int,
-             performance: float, model: str, memory: int, color: str):
-        super().init(name, description, price, quantity)
-        self.performance = performance
-        self.model = model
-        self.memory = memory
-        self.color = color
-
-    def get_additional_info(self) -> str:
-        return (f"Характеристики: Модель - {self.model}, Цвет - {self.color}, "
-                f"Память - {self.memory}ГБ, Производительность - {self.performance}ГГц")
-
-
-class LawnGrass(BaseProduct):
-    def init(self, name: str, description: str, price: float, quantity: int,
-             country: str, germination_period: str, color: str):
-        super().init(name, description, price, quantity)
-        self.country = country
-        self.germination_period = germination_period
-        self.color = color
-
-    def get_additional_info(self) -> str:
-        return (f"Происхождение: {self.country}, "
-                f"Срок прорастания - {self.germination_period}, "
-                f"Цвет - {self.color}")
-
-class BaseProduct(LogCreationMixin, ABC):
-    """Абстрактный базовый класс для всех продуктов с функцией логирования."""
-
-    def init(self, name: str, description: str, price: float, quantity: int, **kwargs):
-        """
-        Конструктор базового класса продукта.
-        **kwargs нужен для передачи дополнительных аргументов в миксин и другие классы.
-        """
-        # Сохраняем аргументы для логирования перед передачей дальше
-        self._init_args = {
-            'name': name,
-            'description': description,
-            'price': price,
-            'quantity': quantity
-        }
-
-        super().init(name=name, description=description, price=price, quantity=quantity, **kwargs)
-
-        # Инициализация атрибутов
+    def __init__(self, name, price):
         self.name = name
-        self.description = description
-        self.__price = price
-        self.quantity = quantity
+        self.price = price
 
+    def get_info(self):
+        return f'Product: {self.name}, Price: {self.price}'
+
+# Класс Smartphone, наследующийся от Product
+class Smartphone(Product):
+
+    def __init__(self, name, price, model):
+        super().__init__(name, price)
+        self.model = model
+
+    def get_info(self):
+        return f'Smartphone: {self.name}, Model: {self.model}, Price: {self.price}'
+
+# Класс LawnGrass, наследующийся от Product
+class LawnGrass(Product):
+
+    def __init__(self, name, price, type_of_grass):
+        super().__init__(name, price)
+        self.type_of_grass = type_of_grass
+
+    def get_info(self):
+        return f'LawnGrass: {self.name}, Type: {self.type_of_grass}, Price: {self.price}'
+
+# Пример использования
+smartphone = Smartphone("iPhone", 999, "12 Pro")
+lawn_grass = LawnGrass("Kentucky Bluegrass", 50, "Cool-season")
+
+print(smartphone.get_info())
+print(lawn_grass.get_info())
