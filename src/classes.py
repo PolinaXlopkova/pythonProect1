@@ -63,47 +63,43 @@ class Category:
         total_quantity = sum(product.quantity for product in self.__products)
         return f"{self.name}, количество продуктов: {total_quantity} шт."
 
-
-# Абстрактный класс BaseProduct
 class BaseProduct(ABC):
 
     @abstractmethod
-    def get_info(self):
+    def __add__(self, other):
         pass
 
-# Класс Product, наследующийся от BaseProduct
-class Product(BaseProduct):
+    @abstractmethod
+    def __str__(self):
+        pass
 
-    def __init__(self, name, price):
-        self.name = name
-        self.price = price
+    @abstractmethod
+    def new_product(self):
+        pass
 
-    def get_info(self):
-        return f'Product: {self.name}, Price: {self.price}'
-
-# Класс Smartphone, наследующийся от Product
-class Smartphone(Product):
-
-    def __init__(self, name, price, model):
-        super().__init__(name, price)
-        self.model = model
-
-    def get_info(self):
-        return f'Smartphone: {self.name}, Model: {self.model}, Price: {self.price}'
-
-# Класс LawnGrass, наследующийся от Product
 class LawnGrass(Product):
+    def __init__(self, name, description, price, quantity, country, germination_period, color):
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
 
-    def __init__(self, name, price, type_of_grass):
-        super().__init__(name, price)
-        self.type_of_grass = type_of_grass
+    def __add__(self, other):
+        if type(self) is type(other):
+            return self.price * self.quantity + other.price * other.quantity
+        else:
+            raise TypeError
 
-    def get_info(self):
-        return f'LawnGrass: {self.name}, Type: {self.type_of_grass}, Price: {self.price}'
+class Smartphone(Product):
+    def __init__(self, name, description, price, quantity, efficiency, model, memory, color):
+        super().__init__(name, description, price, quantity)
+        self.efficiency = efficiency
+        self.model = model
+        self.memory = memory
+        self.color = color
 
-# Пример использования
-smartphone = Smartphone("iPhone", 999, "12 Pro")
-lawn_grass = LawnGrass("Kentucky Bluegrass", 50, "Cool-season")
-
-print(smartphone.get_info())
-print(lawn_grass.get_info())
+    def __add__(self, other):
+        if type(self) is type(other):
+            return self.price * self.quantity + other.price * other.quantity
+        else:
+            raise TypeError
